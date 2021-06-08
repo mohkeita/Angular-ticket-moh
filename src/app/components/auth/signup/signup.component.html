@@ -1,0 +1,168 @@
+<div>
+  <main>
+    <section class="relative w-full h-full py-40 min-h-screen">
+      <div
+        class="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
+        style="background-image: url('assets/img/register_bg_2.png')"
+      ></div>
+
+
+
+      <div class="container mx-auto px-4 h-full">
+        <div class="flex content-center items-center justify-center h-full">
+
+          <div class="w-full lg:w-6/12 px-4">
+            <div
+              class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
+
+              <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                <div class="text-red-600 text-center mb-3 font-bold">
+                  <small>Inscription</small>
+                </div>
+                <div *ngIf="isSuccesful" class="alert flex flex-row items-center bg-green-200 p-1 rounded border-b-2 border-green-300">
+                  <div class="alert-icon flex items-center bg-green-100 border-2 border-green-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-green-500">
+					<svg fill="currentColor"
+               viewBox="0 0 20 20"
+               class="h-6 w-6">
+						<path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+                  </div>
+                  <div class="alert-content ml-4">
+                    <div class="alert-title font-semibold text-lg text-green-800">
+                      Success
+                    </div>
+                    <div class="alert-description text-sm text-green-600">
+                      Vous êtes inscrit avec succès
+                    </div>
+                  </div>
+                </div>
+                <form [formGroup]="userSignup" (ngSubmit)="onSubmitSignup()">
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Username
+                    </label>
+                    <input
+                      type="text" formControlName="username"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Username"
+                    />
+                    <div *ngIf="username.invalid && username.touched">
+                      <small *ngIf="username.errors?.required" class="text-red-500 text-xs italic">Username est obligatoire</small>
+                      <small *ngIf="username.errors?.minlength" class="text-red-500 text-xs italic">Username doit comporter au moins 3 caractères</small>
+                    </div>
+                  </div>
+
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="text" formControlName="email"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Email"
+                    />
+                    <div *ngIf="getEmail.invalid && getEmail.touched">
+                      <small *ngIf="getEmail.errors?.required" class="text-red-500 text-xs italic">Email est obligatoire</small>
+                      <small *ngIf="getEmail.errors?.minlength" class="text-red-500 text-xs italic">Le mail doit comporter au moins 10 caractères</small>
+                    </div>
+                  </div>
+
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Prenom
+                    </label>
+                    <input type="text" formControlName="firstname"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Prenom"
+                    />
+                    <div *ngIf="firstname.invalid && firstname.touched">
+                      <small *ngIf="firstname.errors?.required" class="text-red-500 text-xs italic">Le prenom est obligatoire</small>
+                      <small *ngIf="firstname.errors?.minlength" class="text-red-500 text-xs italic">Le prenom doit comporter au moins 3 caractères</small>
+                    </div>
+                  </div>
+
+                  <div class="relative w-full mb-3">
+                    <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Nom
+                    </label>
+                    <input
+                      type="text" formControlName="lastname"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Nom"
+                    />
+                    <div *ngIf="lastname.invalid && lastname.touched">
+                      <small *ngIf="lastname.errors?.required" class="text-red-500 text-xs italic">Le nom est obligatoire</small>
+                      <small *ngIf="lastname.errors?.minlength" class="text-red-500 text-xs italic">Le nom doit comporter au moins 3 caractères</small>
+                    </div>
+                  </div>
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Date de naissance
+                    </label>
+                    <input
+                      type="text" formControlName="dateBirth"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Format AAAA-MM-JJ ex:1976-09-29"
+                    />
+                    <div *ngIf="dateBirth.invalid && dateBirth.touched">
+                      <small *ngIf="dateBirth.errors?.required" class="text-red-500 text-xs italic">La date de naissance est obligatoire</small>
+                      <small *ngIf="dateBirth.errors?.minlength" class="text-red-500 text-xs italic">La date de naissance doit contenir au moins 8 caractères</small>
+                    </div>
+                  </div>
+
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Mot de passe
+                    </label>
+                    <input
+                      type="password" formControlName="password"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Mot de passe"
+                    />
+                    <div *ngIf="password.invalid && password.touched">
+                      <small *ngIf="password.errors?.required" class="text-red-500 text-xs italic">mot de passe obligatoire</small>
+                      <small *ngIf="password.errors?.minlength" class="text-red-500 text-xs italic">Le mot de passe doit contenir au moins 8 caractères</small>
+                    </div>
+                  </div>
+                  <div class="relative w-full mb-3">
+                    <label
+                      class="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      Confirmation Mot de Passe
+                    </label>
+                    <input
+                      type="password" formControlName="confirmPassword"
+                      class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      placeholder="Mot de passe"/>
+                    <small *ngIf="userSignup.errors?.misMatch" class="text-red-500 text-xs italic">Les mots de passe ne correspondent pas</small>
+                  </div>
+                  <small *ngIf="errorMessage" class="text-red-500 text-xs italic">Invalid Email, Username ou email, username existe déjà</small>
+
+                  <div class="text-center mt-6">
+                    <button
+                      class="bg-red-600 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      type="submit">
+                      S'enregistrer
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+  </main>
+</div>
+
+
+
+

@@ -1,0 +1,255 @@
+<div class="my-10">
+  <div class="m-5 mt-10 sm:mt-0">
+    <div class="md:grid md:grid-cols-3 md:gap-6">
+      <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+          <h3 class="text-lg font-medium leading-6 text-red-600">Ajouter une entreprise</h3>
+
+          <div *ngIf="succes"  class="editor mx-auto w-10/12 flex flex-col text-gray-800 border border-gray-300 p-4 max-w-2xl">
+            <div  class="alert flex flex-row items-center bg-green-200 p-1 rounded border-b-2 border-green-300">
+              <div class="alert-icon flex items-center bg-green-100 border-2 border-green-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-green-500">
+					<svg fill="currentColor"
+               viewBox="0 0 20 20"
+               class="h-6 w-6">
+						<path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+              </div>
+              <div class="alert-content ml-4">
+                <div class="alert-title font-semibold text-lg text-green-800">
+                  Success
+                </div>
+                <div class="alert-description text-sm text-green-600">
+                  Le compte de l'entreprise a ete créé avec succès
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="show" >
+            <small class="text-green-500 text-sm italic">Redirection dans {{count}} secondes</small>
+          </div>
+
+          <div *ngIf="errorMessage"  class="alert flex flex-row items-center bg-red-200 p-1 rounded border-b-2 border-red-300">
+
+            <div class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-red-500">
+					<svg fill="currentColor"
+               viewBox="0 0 20 20"
+               class="h-6 w-6">
+						<path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+            </div>
+            <div class="alert-content ml-4">
+              <div class="alert-title font-semibold text-lg text-red-800">
+                Erreur
+              </div>
+              <div class="alert-description text-sm text-red-600">
+                échec d'ajout de l'entreprise ..!
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="isEmpty" class="alert flex flex-row items-center bg-red-200 p-1 rounded border-b-2 border-red-300">
+            <div class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-red-500">
+					<svg fill="currentColor"
+               viewBox="0 0 20 20"
+               class="h-6 w-6">
+						<path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+            </div>
+            <div class="alert-content ml-4">
+              <div class="alert-title font-semibold text-lg text-red-800">
+                Erreur
+              </div>
+              <div class="alert-description text-sm text-red-600">
+                échec de creation verifier les champs!
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="errorImage" class="alert flex flex-row items-center bg-red-200 p-1 rounded border-b-2 border-red-300">
+            <div class="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+				<span class="text-red-500">
+					<svg fill="currentColor"
+               viewBox="0 0 20 20"
+               class="h-6 w-6">
+						<path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+					</svg>
+				</span>
+            </div>
+            <div class="alert-content ml-4">
+              <div class="alert-title font-semibold text-lg text-red-800">
+                Erreur
+              </div>
+              <div class="alert-description text-sm text-red-600">
+                Probleme de telechargement de l'image
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="mt-5 md:mt-0 md:col-span-2">
+        <form [formGroup]="organizersForm" (ngSubmit)="onSubmitOrganizers()">
+          <div class="shadow overflow-hidden sm:rounded-md">
+            <div class="px-4 py-5 bg-white sm:p-6">
+              <div class="grid grid-cols-6 gap-6">
+
+                <div class="col-span-6 sm:col-span-3 lg:col-span-2">
+                  <label class="block text-sm font-medium text-gray-700">
+                    Flyer de l'événement
+                  </label>
+                  <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                    <div class="space-y-1 text-center">
+                      <svg *ngIf="!file" class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                        <path  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <div *ngIf="!file" class="flex text-sm text-gray-600">
+                        <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-gray-600 hover:text-red-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                          <span>Ajouter une image</span>
+                          <input id="file-upload" (change)="onSelect($event)" name="file-upload" type="file" class="sr-only">
+                        </label>
+                      </div>
+                      <div *ngIf="image" class="flex text-sm text-gray-600">
+                        <label class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                          <span> {{image | slice:-29}}</span>
+                        </label>
+                        <div (click)="Undelete()" class="flex justify-center py-2.5 cursor-pointer">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </div>
+                      </div>
+                      <p *ngIf="!file" class="text-xs text-gray-500">
+                        PNG, JPG, GIF jusqu'à 10 Mo
+                      </p>
+                    </div>
+                  </div>
+
+
+                  <div *ngIf="progress > 0" class="my-1.5 h-4 relative max-w-xl rounded-full overflow-hidden">
+                    <div class="w-full h-full bg-gray-200 absolute"></div>
+                    <div class="h-full text-center text-xs text-white bg-green-500 absolute" style="width:{{progress}}%"> {{progress}}%</div>
+                  </div>
+
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <img *ngIf="image" src="{{image}}" alt="afiche evenement" class="h-36">
+                </div>
+
+                <input formControlName="logo" type="hidden"  [ngModel]="image"/>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <label  class="block text-sm font-medium text-gray-700">Nom de l'entreprise</label>
+                  <input
+                    [ngClass]="name.invalid && name.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="name" type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+
+                  <div *ngIf="name.invalid && name.touched">
+                    <small *ngIf="name.errors?.required" class="text-red-500 text-xs italic">Nom de l'entreprise est obligatoire</small>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-4">
+                  <label class="block text-sm font-medium text-gray-700">A propos</label>
+                  <textarea
+                    [ngClass]="about.invalid && about.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" ></textarea>
+                  <div *ngIf="about.invalid && about.touched">
+                    <small *ngIf="about.errors?.required" class="text-red-500 text-xs italic">A propos est obligatoire</small>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <label  class="block text-sm font-medium text-gray-700">Email</label>
+                  <input
+                    [ngClass]="email.invalid && email.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="email" type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+
+                  <div *ngIf="email.invalid && email.touched">
+                    <small *ngIf="email.errors?.required" class="text-red-500 text-xs italic">Email est obligatoire</small>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <label  class="block text-sm font-medium text-gray-700">Numero de telephone</label>
+                  <input
+                    [ngClass]="phone.invalid && phone.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="phone" type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+
+                  <div *ngIf="phone.invalid && phone.touched">
+                    <small *ngIf="phone.errors?.required" class="text-red-500 text-xs italic">Numero de telephone est obligatoire</small>
+                  </div>
+                </div>
+
+                <div class="col-span-6 sm:col-span-3">
+                  <label  class="block text-sm font-medium text-gray-700">Rue</label>
+                  <input
+                    [ngClass]="street.invalid && street.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="street" type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+
+                  <div *ngIf="street.invalid && street.touched">
+                    <small *ngIf="street.errors?.required" class="text-red-500 text-xs italic">Rue est obligatoire</small>
+                  </div>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                  <label  class="block text-sm font-medium text-gray-700">Code Postal et Ville</label>
+                  <input
+                    [ngClass]="city.invalid && city.touched ?'focus:border-red-500 focus:ring-red-500 border-red-500' : ' border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                    formControlName="city" type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+
+                  <div *ngIf="city.invalid && city.touched">
+                    <small *ngIf="city.errors?.required" class="text-red-500 text-xs italic">Code Postal et Ville sont obligatoire</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+              <button (click)="onClick()" type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <svg *ngIf="spiner"
+                     class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                     xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24">
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  />
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+
+                Créer
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

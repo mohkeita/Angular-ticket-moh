@@ -1,0 +1,118 @@
+<ng-container *ngIf="(currentEvents$ | async) as result" [ngSwitch]="result.dataState">
+  <ng-container *ngSwitchCase="DatastateEnum.LOADING">
+    <div  class="min-h-screen flex justify-center items-center bg-white">
+      <div class="loader bg-black p-5 rounded-full flex space-x-3">
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DatastateEnum.ERROR">
+
+
+    <div class="m-4 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 ">
+      <div class="flex items-center justify-center w-12 bg-red-500">
+        <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"/>
+        </svg>
+      </div>
+
+      <div class="px-4 py-2 -mx-3">
+        <div class="mx-3">
+          <span class="font-semibold text-red-500 dark:text-red-400">Erreur</span>
+          <p class="text-sm text-gray-600 dark:text-gray-200">Erreur Message: {{result.errorMessage}}</p>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DatastateEnum.LOADED">
+
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{result.data.imageUrl}}">
+
+      <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <h2 class="text-sm title-font text-red-500 tracking-widest">{{result.data.categoryName}}</h2>
+        <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{result.data.title}}</h1>
+        <div class="flex mb-4">
+          <span class="flex items-center">
+
+            <button type="button" routerLink="/company/{{result.data.organizersId}}" class="text-gray-600 ml-3"><i class="fas fa-building"></i> {{result.data.organizersName}}</button>
+          </span>
+
+
+
+        </div>
+        <p class="leading-relaxed"> {{result.data.description}}</p>
+
+        <div class="flex mt-4">
+          <div>
+            <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1"><i class="far fa-calendar-alt"></i> {{result.data.dateEvent | date: 'dd/MM/yyyy'}}</p>
+          </div>
+          <div class="pl-2">
+            <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1"><i class="far fa-clock"></i> {{result.data.dateEvent | date: "HH:mm"}}</p>
+          </div>
+          <div class="pl-2">
+            <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1"><i class="fas fa-map-marker-alt"></i> {{result.data.street}}, {{result.data.city}}</p>
+          </div>
+        </div>
+        <form [formGroup]="checkOutForm" (ngSubmit)="checkout()">
+        <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+          <div class="flex ml-6 items-center" *ngIf="result.data.rest > 0">
+            <span class="mr-3">Quantité</span>
+            <div class="relative" >
+              <input formControlName="quantity" type="number" min="1" max="{{result.data.rest}}" class="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3">
+
+            </div>
+          </div>
+          <div class="flex" *ngIf="result.data.rest > 0">
+            <span class="ml-3 text-xs">{{result.data.rest}} Disponible</span>
+          </div>
+
+        </div>
+                    <input formControlName="priceId" type="hidden"  [ngModel]="result.data.stripePriceId"/>
+
+
+        <div class="flex">
+          <span class="title-font font-medium text-2xl text-red-500">{{result.data.unitPrice | currency:'EUR'}}</span>
+
+          <button (click)="onClick()" *ngIf="connect && result.data.rest > 0" type="submit" class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+            <svg *ngIf="spinner"
+                 class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                 xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24">
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            Acheter
+          </button>
+        </div>
+
+        </form>
+        <small *ngIf="errorLimit" class="text-red-500 text-xs italic">Vous ne pouvez pas acheter plus de 5 tickets pour le meme evenement</small>
+        <div *ngIf="!connect" class="heading text-center font-bold text-2xl m-5"><a routerLink="/login">Connecter-vous pour acheter votre ticket</a></div>
+        <div *ngIf="result.data.rest ===0 && connect" class="heading text-red-500 text-center font-bold text-2xl m-5">Desolé il n'y a plus de ticket disponible</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+  </ng-container>
+</ng-container>

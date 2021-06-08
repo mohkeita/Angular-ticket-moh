@@ -1,0 +1,71 @@
+<nav class="bg-gray-800">
+  <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <div class="relative flex items-center justify-between h-16">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+
+      </div>
+      <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+
+        <div class="hidden sm:block sm:ml-6">
+          <div class="flex space-x-4">
+
+            <a routerLink="/" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Accueil</a>
+
+            <a routerLink="events" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Événements</a>
+            <a *ngIf="connect" routerLink="mytickets" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Mes Tickets</a>
+
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <button *ngIf="isAdmin"
+                routerLink="admin"
+                class="bg-red-600 text-white active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                type="button">
+          <i class="fas fa-users-cog"></i> Admin
+        </button>
+
+        <button *ngIf="!connect"
+          routerLink="login"
+          class="bg-red-600 text-white active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+          type="button">
+          <i class="fas fa-sign-in-alt"></i> Connexion
+        </button>
+        <button *ngIf="!connect" routerLink="signup"
+          class="bg-red-600 text-white active:bg-red-700 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+          type="button">
+           <i class="fas fa-user-plus"></i> S'inscrire
+        </button>
+
+        <!-- Profile dropdown -->
+        <div *ngIf="connect" class="ml-3 relative">
+          <div>
+            <button (click)="Onclickdrop()" type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+              <span class="sr-only">Open user menu</span>
+              <img class="h-8 w-8 rounded-full" src="data:image/jpeg;base64,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" alt="">
+            </button>
+          </div>
+
+          <!--
+            Dropdown menu, show/hide based on menu state.
+
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+          <div *ngIf="isOpenedList" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+            <!-- Active: "bg-gray-100", Not Active: "" -->
+            <a href="#" class="block font-bold px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">{{nomPrenom}}</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Profil</a>
+            <a (click)="logout()" href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-3">Déconnexion</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+

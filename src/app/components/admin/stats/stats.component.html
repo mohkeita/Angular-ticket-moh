@@ -1,0 +1,64 @@
+
+
+
+
+<div class="relative bg-red-600 md:pt-32 pb-32 pt-12">
+  <div class="px-4 md:px-10 mx-auto w-full">
+    <div>
+
+      <!-- Card stats -->
+      <div class="flex flex-wrap">
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats
+            statSubtitle="Solde Total"
+            statTitle="{{AllStats.amountTicket | currency:'EUR'}}"
+            statArrow=""
+            statPercent=""
+            statPercentColor="text-emerald-500"
+            statDescripiron=""
+            statIconName="far fa-chart-bar"
+            statIconColor="bg-red-500"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats
+            statSubtitle="Événements"
+            statTitle="{{AllStats.numberOfEvents}}"
+            statArrow=""
+            statPercent=""
+            statPercentColor="text-red-500"
+            statDescripiron=""
+            statIconName="far fa-calendar-alt"
+            statIconColor="bg-red-500"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats
+            statSubtitle="Utilisateurs"
+            statTitle="{{AllStats.numberOfUser}}"
+            statArrow=""
+            statPercent=""
+            statPercentColor="text-orange-500"
+            statDescripiron=""
+            statIconName="fas fa-users"
+            statIconColor="bg-red-500"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+          <app-card-stats
+            statSubtitle="Tickets Vendus"
+            statTitle="{{AllStats.soldeTicket}}"
+            statArrow=""
+            statPercent=""
+            statPercentColor="text-emerald-500"
+            statDescripiron=""
+            statIconName="fas fa-ticket-alt"
+            statIconColor="bg-red-500"
+          ></app-card-stats>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,70 @@
+<ng-container *ngIf="(tickets$ | async) as result" [ngSwitch]="result.dataState">
+
+  <ng-container *ngSwitchCase="DatastateEnum.LOADING">
+    <div  class="min-h-screen flex justify-center items-center bg-white">
+      <div class="loader bg-black p-5 rounded-full flex space-x-3">
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+        <div class="w-5 h-5 bg-gray-100 rounded-full animate-bounce"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DatastateEnum.ERROR">
+
+
+    <div class="m-4 flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 ">
+      <div class="flex items-center justify-center w-12 bg-red-500">
+        <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"/>
+        </svg>
+      </div>
+
+      <div class="px-4 py-2 -mx-3">
+        <div class="mx-3">
+          <span class="font-semibold text-red-500 dark:text-red-400">Erreur</span>
+          <p class="text-sm text-gray-600 dark:text-gray-200">Erreur Message: {{result.errorMessage}}</p>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngSwitchCase="DatastateEnum.LOADED">
+<div class="container p-12 mx-auto bg-white dark:bg-gray-800">
+  <h2 class="text-xl font-medium text-gray-800 capitalize dark:text-white md:text-2xl">Mes Tickets</h2>
+</div>
+
+
+    <ng-container *ngIf="result.data.length == 0">
+      <div class="heading text-center font-bold text-red-500 text-2xl m-5">Desolé vous n'avez pas acheter de ticket</div>
+    </ng-container>
+    <ng-container *ngIf="result.data.length > 0">
+<div *ngFor="let ev of result.data" class="m-2 max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+
+
+
+  <div class="md:flex">
+    <div class="md:flex-shrink-0">
+
+      <ngx-qrcode
+        [elementType]="elementType"
+        [errorCorrectionLevel]="correctionLevel"
+        [value]="ev.codeTicket"
+        cssClass="bshadow"></ngx-qrcode>
+
+    </div>
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-red-500 font-semibold">{{ev.dateEvent | date: 'dd/MM/yyyy'}} à {{ev.dateEvent | date: "HH:mm"}}</div>
+      <h2 class="text-red-600 text-xs font-semibold"><i class="fas fa-map-marker-alt"></i> {{ev.street}}, {{ev.city}}</h2>
+      <p class="block mt-1 text-lg leading-tight font-medium text-black">{{ev.title}}</p>
+      <p class="mt-2 text-gray-500">{{ev.description | slice: 0:95}}</p>
+      <p class="mt-2 text-black">Ticket acheter  le {{ev.buyDate | date: 'dd/MM/yyyy'}}</p>
+    </div>
+  </div>
+
+
+</div>
+    </ng-container>
+  </ng-container>
+</ng-container>
